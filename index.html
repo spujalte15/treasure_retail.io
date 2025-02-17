@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TreasureAgent - Innovative Sales Associate Agent</title>
+    <style>
+        /* Reset and base styles */
+        /* austin.woodard@rogers.com*/
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Navigation styles */
+        nav {
+            background-color: #1c1c1c;
+            color: #fff;
+            padding: 1rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 1.5rem;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #3d9970;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-right a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 1rem;
+        }
+
+        /* Hero section styles */
+        .hero {
+            background-image: url('https://i.ibb.co/9396Y7xQ/Mock-Up-Clienteling-with-LLM.png');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            margin-top:60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #fff;
+        }
+
+        .hero-content {
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 2rem;
+            border-radius: 10px;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: #3d9970;
+            color: #fff;
+            padding: 0.8rem 1.5rem;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background-color: #2ecc40;
+        }
+
+        /* Dealer section styles */
+        .dealer-section {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background-color: #f4f4f4;
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .dealer-links {
+            display: flex;
+            flex-direction: column;
+            list-style: none;
+        }
+
+        .dealer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .dealer-links a {
+            color: #333;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .dealer-links a:hover {
+            color: #3d9970;
+        }
+
+        /* Chat bot styles */
+        .chat-bot {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #3d9970;
+            color: #fff;
+            padding: 1rem;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            z-index: 1000;
+        }
+
+        .chat-bot:hover {
+            background-color: #2ecc40;
+        }
+
+        .chat-window {
+            display: none;
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 300px;
+            height: 400px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .chat-header {
+            background-color: #3d9970;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-controls {
+            display: flex;
+        }
+
+        .chat-control {
+            background: none;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            font-size: 1.2rem;
+            margin-left: 0.5rem;
+        }
+
+        .chat-messages {
+            height: calc(100% - 90px);
+            overflow-y: auto;
+            padding: 1rem;
+        }
+
+        .chat-message-sender {
+            text-align: right;
+            text-wrap: wrap;
+            width: 35vw;
+            margin-left: auto;
+            margin-right: 0;
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #ddede5;
+            border-radius: 15px;
+        }
+
+        /*.chat-message-sender::before {
+            content: "";
+            position: absolute;
+            right: -10px; 
+            top: 15px;
+            border-width: 10px;
+            border-style: solid;
+            border-color: transparent transparent transparent #e0f7fa; 
+        }*/
+
+
+        .chat-message-sender-header {
+            text-align: right;
+            text-wrap: wrap;
+            width: 35vw;
+            margin-left: auto;
+            margin-right: 0;
+        }
+
+        .chat-message-api {
+            width: 60vw;
+            border-radius: 15px;
+            background-color: #d0d3f7;
+            padding: 10px;
+            margin-bottom: 15px;
+        }
+
+        .chat-message-api div ul {
+            padding-left: 25px;
+        }
+
+        .chat-message-api div ol {
+            padding-left: 25px;
+        }
+
+        .chat-input {
+            display: flex;
+            padding: 0.5rem;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+
+        .chat-input input {
+            flex-grow: 1;
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 5px 0 0 5px;
+        }
+
+        .chat-input button {
+            background-color: #3d9970;
+            color: #fff;
+            border: none;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .chat-minimized {
+            height: auto;
+        }
+
+        .chat-minimized .chat-messages,
+        .chat-minimized .chat-input {
+            display: none;
+        }
+
+        .chat-expanded {
+            width: 75vw;
+            height: 75vh;
+            /*max-width: 800px;
+            max-height: 600px;*/
+        }
+
+        .suggested-button {
+            padding: 10px;
+            display: inline-block;
+        }
+
+        .suggested-button button {
+            background-color: #905efb;
+            color: white;
+            padding: 10px 16px;
+            text-decoration: none;
+            border-radius: 5px;
+            border: none;
+            display: inline-block;
+            text-align: center;
+            margin-top: 10px;
+            font-size: 14px;
+            width: 14vw;
+        }
+
+        .suggested-button a {
+            text-decoration: none;
+            color: #fff;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .dealer-section {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .chat-expanded {
+                width: 90vw;
+                height: 70vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo">Treasure Retail</a>
+            <ul class="nav-links">
+                <li><a href="#">Product</a></li>
+                <li><a href="#">Inventory</a></li>
+                <li><a href="#">Promotion</a></li>
+                <li><a href="#">Stores</a></li>
+                <li><a href="#">Login</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero">
+    </section>
+
+    <div class="chat-bot" id="chatBot">
+        <i class="fas fa-comment"></i>
+    </div>
+
+    <div class="chat-window" id="chatWindow">
+        <div class="chat-header">
+            <span>Treasure Associate Chat</span>
+            <div class="chat-controls">
+                <button class="chat-control" id="expandChat">&#x26F6;</button>
+                <button class="chat-control" id="minimizeChat">_</button>
+                <button class="chat-control" id="closeChat">×</button>
+            </div>
+        </div>
+        <div class="chat-messages" id="chatMessages"></div>
+        <div class="chat-input">
+            <input type="text" id="chatInput" placeholder="Type your message...">
+            <button id="sendMessage">Send</button>
+        </div>
+    </div>
+
+    <script>
+        // Chat functionality
+        const chatBot = document.getElementById('chatBot');
+        const chatWindow = document.getElementById('chatWindow');
+        const chatMessages = document.getElementById('chatMessages');
+        const chatInput = document.getElementById('chatInput');
+        const sendMessage = document.getElementById('sendMessage');
+        const minimizeChat = document.getElementById('minimizeChat');
+        const expandChat = document.getElementById('expandChat');
+        const closeChat = document.getElementById('closeChat');
+        chatId = '019514fe-0224-7dc5-beaf-6cd0247628a2';
+        // chatId = '';
+
+        chatBot.addEventListener('click', toggleChat);
+        sendMessage.addEventListener('click', sendChatMessage);
+        minimizeChat.addEventListener('click', minimizeChatWindow);
+        expandChat.addEventListener('click', expandChatWindow);
+        closeChat.addEventListener('click', closeChatWindow);
+
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendChatMessage();
+            }
+        });
+
+        function toggleChat() {
+            chatWindow.style.display = chatWindow.style.display === 'none' ? 'block' : 'none';
+            chatWindow.classList.remove('chat-minimized');
+        }
+
+        function minimizeChatWindow() {
+            chatWindow.classList.toggle('chat-minimized');
+            chatWindow.classList.remove('chat-expanded');
+        }
+
+        function expandChatWindow() {
+            chatWindow.classList.toggle('chat-expanded');
+            chatWindow.classList.remove('chat-minimized');
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function closeChatWindow() {
+            chatWindow.style.display = 'none';
+            chatWindow.classList.remove('chat-minimized', 'chat-expanded');
+        }
+
+        function sendChatMessage() {
+            const message = chatInput.value.trim();
+            if (message) {
+                appendMessage('You: ', message);
+                chatInput.value = '';
+                // Call the webhook API
+                const postData = {'text': message};
+                fetchChatResponse(postData);
+            }
+        }
+
+        function fillChatInput(button) {
+            chatInput.value = button.innerText;
+            sendChatMessage();
+        }
+
+        function suggestedButtons(buttons) {
+            for (var i = 0; i < buttons.length; i++) {
+                const buttonElement = document.createElement('div');
+                buttonElement.classList.add('suggested-button');
+                buttonElement.innerHTML = `<button><a href="#" onclick=fillChatInput(this)>${buttons[i]}</a></button>`;
+                chatMessages.appendChild(buttonElement);
+            }
+        }
+
+        function appendMessage(sender, message) {
+            const messageElement = document.createElement('div');
+            // messageElement.className = 'ind-message';
+            // chatMessages.appendChild(messageElement);
+            
+            if (sender != '') {
+                if (sender == 'You: ') {
+                    messageElement.classList.add('chat-message-sender-header')
+                    messageElement.innerHTML = `<strong>${sender}</strong>`;
+                    const messageElement1 = document.createElement('div');
+                    messageElement1.classList.add('chat-message-sender');
+                    messageElement1.innerHTML = `${message}`;
+                    chatMessages.appendChild(messageElement);
+                    chatMessages.appendChild(messageElement1);
+                } else {
+                    messageElement.innerHTML = `<strong>${sender}</strong> ${message}`;
+                    chatMessages.appendChild(messageElement);
+                }
+            } else {
+                messageElement.classList.add('chat-message-api')
+                messageElement.innerHTML = `${message}`;
+                chatMessages.appendChild(messageElement);
+                // streamText(messageElement, message, speed)
+            }
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+
+        async function fetchChatResponse(message) {
+            const headers = {
+                'Content-Type': 'application/json',
+                'Authorization': 'Basic djA6UVJIbndCVzJBNmJHQXJGTnpmdW05bU1x',
+            };
+
+            if (chatId) {
+                headers['x-continue-chat-id'] = chatId
+            };
+
+            try {
+                // console.log(chatId);
+                const response = await fetch('https://llm-connect.eu01.treasuredata.com/api/actions/019514f0-efd6-7f7f-9995-05a11093bd01/text', {
+                    method: 'POST',
+                    headers: headers,
+                    body: JSON.stringify( message )
+                });
+                
+                // Check if the response is okay
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                // Get a reader for the readable stream
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder(); // Decodes the stream into text
+
+                let result = '';
+                let done = false;
+
+                // Read chunks from the stream until done
+                appendMessage('Treasure Retail:', '');
+                while (!done) {
+                    const { value, done: streamDone } = await reader.read();
+                    done = streamDone;
+
+                    // If there's value, decode it and append to the result
+                    if (value) {
+                        result += decoder.decode(value, { stream: true });
+                        // appendMessage('', decoder.decode(value, { stream: true }), 50);
+                    }
+                }
+                appendMessage('', result);
+                const buttons = ["Profile Details", "Summary", "Purchase History", "Store Visit History", "Browsing History", "Recommendations", "Sales Pitch", "Draft Email"];
+                suggestedButtons(buttons);
+            } catch (error) {
+                console.log(error);
+                appendMessage('TreasureCars:', 'Sorry, there was an error processing your request.' + error);
+            }
+        }
+    </script>
+</body>
+</html>
