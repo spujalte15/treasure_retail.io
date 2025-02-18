@@ -489,7 +489,7 @@
         async function fetchChatResponse(message) {
             const headers = {
                 'Content-Type': 'application/json',
-                'Authorization': ${secrets.BEARER_TOKEN},
+                'Authorization': '${secrets.BEARER_TOKEN}',
             };
 
             if (chatId) {
